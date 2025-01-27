@@ -1,0 +1,82 @@
+<div class="mb-4 flex justify-center gap-2">
+  <button
+    (click)="setFilter('all')"
+    class="px-4 py-2 rounded-md"
+    [class.bg-blue-500]="currentFilter === 'all'"
+    [class.text-white]="currentFilter === 'all'"
+    [class.bg-gray-200]="currentFilter !== 'all'"
+  >
+    All
+  </button>
+  <button
+    (click)="setFilter('active')"
+    class="px-4 py-2 rounded-md"
+    [class.bg-blue-500]="currentFilter === 'active'"
+    [class.text-white]="currentFilter === 'active'"
+    [class.bg-gray-200]="currentFilter !== 'active'"
+  >
+    Active
+  </button>
+  <button
+    (click)="setFilter('completed')"
+    class="px-4 py-2 rounded-md"
+    [class.bg-blue-500]="currentFilter === 'completed'"
+    [class.text-white]="currentFilter === 'completed'"
+    [class.bg-gray-200]="currentFilter !== 'completed'"
+  >
+    Completed
+  </button>
+</div>
+<ul class="space-y-4">
+  @for (task of tasks; track task.id) {
+    <li
+      class="flex items-center justify-between p-4 bg-white rounded-lg shadow transition-all duration-300 ease-in-out transform hover:scale-105"
+      [class.opacity-50]="task.completed"
+    >
+      <div class="flex items-center space-x-4">
+        <input
+          type="checkbox"
+          [checked]="task.completed"
+          (change)="toggleTask(task)"
+          class="form-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-500"
+        >
+        <span
+          [class.line-through]="task.completed"
+          [class.text-gray-500]="task.completed"
+          class="text-lg"
+        >
+          {{ task.title }}
+        </span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <span
+          class="px-2 py-1 text-sm rounded-full"
+          [class.bg-red-100]="task.priority === 'high'"
+          [class.text-red-800]="task.priority === 'high'"
+          [class.bg-yellow-100]="task.priority === 'medium'"
+          [class.text-yellow-800]="task.priority === 'medium'"
+          [class.bg-green-100]="task.priority === 'low'"
+          [class.text-green-800]="task.priority === 'low'"
+        >
+          {{ task.priority }}
+        </span>
+        @if (task.dueDate) {
+          <span class="text-sm text-gray-500">
+            Due: {{ task.dueDate | date:'mediumDate' }}
+          </span>
+        }
+        <button
+          (click)="deleteTask(task.id!)"
+          class="p-2 text-red-500 hover:text-red-700 focus:outline-none"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+    </li>
+  } @empty {
+    <li class="text-center text-gray-500">No tasks available</li>
+  }
+</ul>
+
