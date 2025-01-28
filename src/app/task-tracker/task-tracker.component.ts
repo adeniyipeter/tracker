@@ -42,7 +42,7 @@ export class TaskTrackerComponent implements AfterViewInit {
   }
 
   addTask(task: Task) {
-    this.taskService.addTask(task).subscribe((newTask) => this.tasks.update((tasks) => [...tasks, newTask]));
+    this.taskService.addTask(task).subscribe((newTask) => this.tasks.update((tasks) => [newTask, ...tasks]));
   }
 
   toggleTask(task: Task) {
