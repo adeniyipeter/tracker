@@ -1,10 +1,21 @@
 <div class="container">
   <div class="header">
     <h1>Task Tracker</h1>
-    <button (click)="toggleDarkMode()">{{ darkMode() ? '🌞' : '🌙' }}</button>
+    <button (click)="toggleDarkMode()">{{ darkMode ? '🌞' : '🌙' }}</button>
   </div>
+
+  <div class="filter-buttons">
+    <button (click)="setFilter('all')" [class.active]="currentFilter === 'all'">All</button>
+    <button (click)="setFilter('active')" [class.active]="currentFilter === 'active'">Active</button>
+    <button (click)="setFilter('completed')" [class.active]="currentFilter === 'completed'">Completed</button>
+  </div>
+
   <app-task-form (taskAdded)="addTask($event)"></app-task-form>
-  <app-task-list [tasks]="filteredTasks()" (taskToggled)="toggleTask($event)"
-                 (taskDeleted)="deleteTask($event)" (taskEdited)="editTask($event)">
+
+  <app-task-list
+    [tasks]="filteredTasks"
+    (taskToggled)="toggleTask($event)"
+    (taskDeleted)="deleteTask($event)"
+    (taskEdited)="editTask($event)">
   </app-task-list>
 </div>

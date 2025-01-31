@@ -1,3 +1,7 @@
+<div class="search-container">
+  <input type="text" placeholder="Search tasks..." [(ngModel)]="searchTerm" (keyup)="filterTasks()">
+  <button (click)="clearSearch()" class="clear-search">❌</button>
+</div>
 <div class="filter-buttons">
   <button (click)="setFilter('all')" [class.active]="currentFilter === 'all'">All</button>
   <button (click)="setFilter('active')" [class.active]="currentFilter === 'active'">Active</button>
@@ -5,20 +9,25 @@
 </div>
 
 <ul class="task-list">
-  <li *ngFor="let task of filteredTasks" class="task-item" [class.completed]="task.completed">
-    <div class="task-details">
-      <input type="checkbox" [checked]="task.completed" (change)="toggleTask(task)">
-      <span class="task-title" [class.strikethrough]="task.completed">{{ task.title }}</span>
-    </div>
-    <div class="task-actions">
-      <span class="priority" [class.high]="task.priority === 'high'"
-            [class.medium]="task.priority === 'medium'"
-            [class.low]="task.priority === 'low'">
-        {{ task.priority }}
-      </span>
-      <span *ngIf="task.dueDate" class="due-date">Due: {{ task.dueDate | date:'mediumDate' }}</span>
-      <button (click)="deleteTask(task.id!)" class="delete-button">🗑️</button>
-    </div>
-  </li>
-  <li *ngIf="filteredTasks.length === 0" class="empty-state">No tasks available</li>
+  <ng-container *ngIf="filteredTasks; else noTasksTemplate">
+    <li *ngFor="let task of filteredTasks | paginate: { itemsPerPage: 10, currentPage: currentPage }" class="task-item"
+      [class.completed]="task.completed">
+      <div class="task-details">
+        <input type="checkbox" [checked]="task.completed" (change)="toggleTask(task)">
+        <span class="task-title" [class.strikethrough]="task.completed">{{ task.title }}</span>
+      </div>
+      <div class="task-actions">
+        <span class="priority" [class.high]="task.priority === 'high'" [class.medium]="task.priority === 'medium'"
+          [class.low]="task.priority === 'low'">
+          {{ task.priority }}
+        </span>
+        <span *ngIf="task.dueDate" class="due-date">Due: {{ task.dueDate | date:'mediumDate' }}</span>
+        <button (click)="deleteTask(task.id!)" class="delete-button">🗑️</button>
+      </div>
+    </li>
+  </ng-container>
+  <ng-template #noTasksTemplate>
+    <li class="empty-state">No tasks available</li>
+  </ng-template>
 </ul>
+<pagination-controls (pageChange)="currentPage = $event"></pagination-controls>

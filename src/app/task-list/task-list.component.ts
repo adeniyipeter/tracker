@@ -1,11 +1,13 @@
 import { Component, Input, Output, EventEmitter, OnInit, DoCheck } from '@angular/core';
 import type { Task } from '../task.service';
 import { CommonModule } from '@angular/common';
-
+import { NgxPaginationModule } from 'ngx-pagination';
+import { FormsModule } from '@angular/forms';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxPaginationModule, FormsModule],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
@@ -17,6 +19,8 @@ export class TaskListComponent implements OnInit, DoCheck {
 
   currentFilter: 'all' | 'active' | 'completed' = 'all';
   filteredTasks: Task[] = [];
+  currentPage = 1;
+  searchTerm: string = '';
 
   ngOnInit(): void {
     this.applyFilter();
@@ -32,6 +36,23 @@ export class TaskListComponent implements OnInit, DoCheck {
       if (this.currentFilter === 'completed') return task.completed;
       return true;
     });
+
+
+    if (this.searchTerm) {
+      const searchTerm = this.searchTerm.toLowerCase();
+      this.filteredTasks = this.filteredTasks.filter(task =>
+        task.title.toLowerCase().includes(searchTerm)
+      );
+    }
+  }
+
+  clearSearch() {
+    this.searchTerm = ''
+    this.filteredTasks = [...this.tasks]; // Reset list
+  }
+
+  filterTasks() {
+    this.applyFilter()
   }
 
   toggleTask(task: Task) {
