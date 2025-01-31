@@ -1,4 +1,138 @@
 /* You can add global styles to this file, and also import other style files */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+}
+
+button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.filter-buttons button {
+  background-color: #e2e8f0;
+}
+
+.filter-buttons .active {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.task-item:hover {
+  transform: scale(1.05);
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-details {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-title {
+  font-size: 18px;
+}
+
+.task-title.strikethrough {
+  text-decoration: line-through;
+  color: #6b7280;
+}
+
+.priority {
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 12px;
+}
+
+.priority.high {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.priority.medium {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.priority.low {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.due-date {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.delete-button {
+  background: none;
+  color: #ef4444;
+  font-size: 18px;
+}
+
+.task-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.task-form input, .task-form select, .task-form button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.task-form button {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.task-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
