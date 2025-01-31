@@ -1,3 +1,19 @@
+/* In styles.css or styles.scss */
+:root {
+  --background-color: white;
+  --text-color: black;
+}
+
+.dark {
+  --background-color: black;
+  --text-color: white;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
 /* General container styling */
 .container {
   max-width: 900px;
